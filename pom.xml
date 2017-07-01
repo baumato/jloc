@@ -15,6 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
+		<mainClass>de.baumato.loc.App</mainClass>
 	</properties>
 
 	<dependencies>
@@ -33,4 +34,67 @@
 		</dependency>
 
 	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<minimizeJar>true</minimizeJar>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>${mainClass}</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+<!-- 			<plugin> -->
+<!-- 				<groupId>com.github.wvengen</groupId> -->
+<!-- 				<artifactId>proguard-maven-plugin</artifactId> -->
+<!-- 				<version>2.0.14</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>shaded-small</id> -->
+<!-- 						<phase>package</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>proguard</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<proguardVersion>5.2</proguardVersion> -->
+<!-- 							<attach>true</attach> -->
+<!-- 							<options> -->
+<!-- 								<option>-optimizationpasses 5</option> -->
+<!-- 								<option>-overloadaggressively</option> -->
+<!-- 								<option>-allowaccessmodification</option> -->
+<!-- 								<option>-repackageclasses 'hidden'</option> -->
+<!-- 								<option>-keep public class ${mainClass} { public static void -->
+<!-- 									main(java.lang.String[]); }</option> -->
+<!-- 							</options> -->
+<!-- 							<option>-keep class org.kohsuke.** { *; }</option> -->
+<!-- 							<injar>${project.build.finalName}-shaded.jar</injar> -->
+<!-- 							<includeDependency>false</includeDependency> -->
+<!-- 							<libs> -->
+<!-- 								<lib>${java.home}/lib/rt.jar</lib> -->
+<!-- 								<lib>${java.home}/lib/jce.jar</lib> -->
+<!-- 							</libs> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+		</plugins>
+	</build>
 </project>
