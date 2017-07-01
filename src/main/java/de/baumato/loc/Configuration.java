@@ -1,5 +1,9 @@
 package de.baumato.loc;
 
+import static de.baumato.loc.Messages.DIR_DOES_NOT_EXIST;
+
+import java.io.StringWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.kohsuke.args4j.CmdLineException;
@@ -19,7 +23,8 @@ public class Configuration {
 	@Option(
 			name = "-d",
 			required = true,
-			usage = "the directory to be analysed",
+			usage = "ARGUMENT_DIRECTORY_USAGE",
+			metaVar = "PATH",
 			hidden = false,
 			aliases = { "--directory" })
 	private Path directory;
@@ -29,13 +34,18 @@ public class Configuration {
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
 		try {
 			parser.parseArgument(args);
+			if (!Files.exists(conf.directory)) {
+				throw new CmdLineException(parser, DIR_DOES_NOT_EXIST, conf.directory.toString());
+			}
 		} catch (CmdLineException e) {
-			System.err.println(e.getMessage());
+			System.err.println(e.getLocalizedMessage());
 			System.err.println();
-			parser.printUsage(System.err);
+			StringWriter w = new StringWriter();
+			parser.printUsage(w, Messages.getResourceBundle(), OptionHandlerFilter.ALL);
+			System.err.println(w.toString());
 			System.err.println();
 			System.err.println("Example:");
-			System.err.println(parser.printExample(OptionHandlerFilter.ALL, null));
+			System.err.println(parser.printExample(OptionHandlerFilter.ALL, Messages.getResourceBundle()));
 			System.exit(1);
 		}
 		return conf;
@@ -47,7 +57,11 @@ public class Configuration {
 
 	@Override
 	public String toString() {
-		return new StringBuilder().append("Configuration [directory=").append(directory).append("]").toString();
+		return new StringBuilder().append(getClass().getSimpleName())
+			.append(" [directory=")
+			.append(directory)
+			.append("]")
+			.toString();
 	}
 
 }
