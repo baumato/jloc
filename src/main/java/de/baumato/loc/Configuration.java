@@ -8,6 +8,12 @@ import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.OptionHandlerFilter;
 import org.kohsuke.args4j.ParserProperties;
 
+/**
+ * Holds the command line arguments
+ *
+ * @author baumato
+ *
+ */
 public class Configuration {
 
 	@Option(
