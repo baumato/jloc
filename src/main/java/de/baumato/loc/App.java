@@ -3,6 +3,7 @@ package de.baumato.loc;
 import static de.baumato.loc.Throwables.getStackTraceAsString;
 
 import de.baumato.loc.Configuration.InvalidCommandLineArgumentsException;
+import de.baumato.loc.printer.ConsolePrinter;
 
 /**
  * Counts the lines of code of all java files within one directory recursively.
@@ -13,14 +14,15 @@ import de.baumato.loc.Configuration.InvalidCommandLineArgumentsException;
 public class App {
 
 	public static void main(String[] args) {
+		ConsolePrinter printer = new ConsolePrinter();
 		try {
+			printer.startProgress();
 			long numberOfLines = new LineCounter(Configuration.ofCmdLine(args)).count();
-			System.out.println(numberOfLines);
+			printer.done(numberOfLines);
 		} catch (InvalidCommandLineArgumentsException e) {
-			System.err.println(e.getMessage());
+			printer.doneWithError(e.getLocalizedMessage());
 		} catch (RuntimeException e) {
-			System.err.println(Messages.UNEXPECTED_ERROR.format(getStackTraceAsString(e)));
+			printer.doneWithError(Messages.UNEXPECTED_ERROR.format(getStackTraceAsString(e)));
 		}
 	}
-
 }
