@@ -2,10 +2,10 @@ package de.baumato.loc;
 
 import static de.baumato.loc.Messages.DIR_DOES_NOT_EXIST;
 
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -30,7 +30,7 @@ public class Configuration {
 			aliases = { "--directory" })
 	private Path directory;
 
-	static Optional<Configuration> ofCmdLine(String... args) {
+	static Configuration ofCmdLine(String... args) throws InvalidCommandLineArgumentsException {
 		Configuration conf = new Configuration();
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
 		try {
@@ -38,17 +38,9 @@ public class Configuration {
 			if (!Files.isDirectory(conf.directory)) {
 				throw new CmdLineException(parser, DIR_DOES_NOT_EXIST, conf.directory.toString());
 			}
-			return Optional.of(conf);
+			return conf;
 		} catch (CmdLineException e) {
-			System.err.println(e.getLocalizedMessage());
-			System.err.println();
-			StringWriter w = new StringWriter();
-			parser.printUsage(w, Messages.getResourceBundle(), OptionHandlerFilter.ALL);
-			System.err.println(w.toString());
-			System.err.println();
-			System.err.println("Example:");
-			System.err.println(parser.printExample(OptionHandlerFilter.ALL, Messages.getResourceBundle()));
-			return Optional.empty();
+			throw new InvalidCommandLineArgumentsException(parser, e);
 		}
 	}
 
@@ -65,4 +57,25 @@ public class Configuration {
 			.toString();
 	}
 
+	public static final class InvalidCommandLineArgumentsException extends Exception {
+
+		private static final long serialVersionUID = 1L;
+
+		public InvalidCommandLineArgumentsException(CmdLineParser parser, CmdLineException e) {
+			super(createMessage(parser, e));
+		}
+
+		private static String createMessage(CmdLineParser parser, CmdLineException e) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			pw.println(e.getLocalizedMessage());
+			pw.println();
+			parser.printUsage(pw, Messages.getResourceBundle(), OptionHandlerFilter.ALL);
+			pw.println();
+			pw.println("Example:");
+			pw.println(parser.printExample(OptionHandlerFilter.ALL, Messages.getResourceBundle()));
+			return sw.toString();
+		}
+
+	}
 }
