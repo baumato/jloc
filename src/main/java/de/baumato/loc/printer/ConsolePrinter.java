@@ -10,10 +10,10 @@ import java.io.UncheckedIOException;
  */
 public class ConsolePrinter {
 
-	private final Animation animation;
+	private final Animator animation;
 
 	public ConsolePrinter() {
-		animation = new Animation();
+		animation = new Animator();
 	}
 
 	public void startProgress() {

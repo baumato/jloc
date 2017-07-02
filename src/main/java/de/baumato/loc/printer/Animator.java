@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-final class Animation extends Thread {
+final class Animator extends Thread {
 
 	private static final String SYMOBLS = "|/⎯\\";
 
