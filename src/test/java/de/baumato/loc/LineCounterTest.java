@@ -4,6 +4,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import de.baumato.loc.configuration.Configuration;
+
 public class LineCounterTest {
 
 	@Rule

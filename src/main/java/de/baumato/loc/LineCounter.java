@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import de.baumato.loc.configuration.Configuration;
+
 public class LineCounter {
 
 	private final Configuration conf;

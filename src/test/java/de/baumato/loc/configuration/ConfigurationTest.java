@@ -1,4 +1,4 @@
-package de.baumato.loc;
+package de.baumato.loc.configuration;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import de.baumato.loc.Configuration.InvalidCommandLineArgumentsException;
+import de.baumato.loc.configuration.Configuration;
 
 public class ConfigurationTest {
 

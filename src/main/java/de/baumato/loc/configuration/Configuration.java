@@ -1,16 +1,13 @@
-package de.baumato.loc;
+package de.baumato.loc.configuration;
 
 import static de.baumato.loc.Messages.DIR_DOES_NOT_EXIST;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
-import org.kohsuke.args4j.OptionHandlerFilter;
 import org.kohsuke.args4j.ParserProperties;
 
 /**
@@ -30,7 +27,7 @@ public class Configuration {
 			aliases = { "--directory" })
 	private Path directory;
 
-	static Configuration ofCmdLine(String... args) throws InvalidCommandLineArgumentsException {
+	public static Configuration ofCmdLine(String... args) throws InvalidCommandLineArgumentsException {
 		Configuration conf = new Configuration();
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
 		try {
@@ -44,7 +41,7 @@ public class Configuration {
 		}
 	}
 
-	Path getDirectory() {
+	public Path getDirectory() {
 		return directory;
 	}
 
@@ -55,27 +52,5 @@ public class Configuration {
 			.append(directory)
 			.append("]")
 			.toString();
-	}
-
-	public static final class InvalidCommandLineArgumentsException extends Exception {
-
-		private static final long serialVersionUID = 1L;
-
-		public InvalidCommandLineArgumentsException(CmdLineParser parser, CmdLineException e) {
-			super(createMessage(parser, e));
-		}
-
-		private static String createMessage(CmdLineParser parser, CmdLineException e) {
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			pw.println(e.getLocalizedMessage());
-			pw.println();
-			parser.printUsage(pw, Messages.getResourceBundle(), OptionHandlerFilter.ALL);
-			pw.println();
-			pw.println("Example:");
-			pw.println(parser.printExample(OptionHandlerFilter.ALL, Messages.getResourceBundle()));
-			return sw.toString();
-		}
-
 	}
 }
