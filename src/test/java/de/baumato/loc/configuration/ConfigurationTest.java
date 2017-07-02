@@ -3,6 +3,7 @@ package de.baumato.loc.configuration;
 import static org.assertj.core.api.Assertions.*;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -10,8 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import de.baumato.loc.configuration.Configuration;
 
 public class ConfigurationTest {
 
@@ -51,6 +50,13 @@ public class ConfigurationTest {
 		File file = tempFolder.getRoot();
 		Configuration conf = Configuration.ofCmdLine("-d", file.getPath());
 		assertThat(conf.getDirectory()).isEqualTo(file.toPath());
+	}
+
+	@Test
+	public void shouldCreateConfigurationWithExcludeDirsArgument() throws Exception {
+		File file = tempFolder.getRoot();
+		Configuration conf = Configuration.ofCmdLine("-d", file.getPath(), "-e", "target", "bin");
+		assertThat(conf.getExcludeDirs()).hasSameElementsAs(Arrays.asList("target", "bin"));
 	}
 
 	@Test

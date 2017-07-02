@@ -1,8 +1,5 @@
 package de.baumato.loc.printer;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-
 /**
  *
  * @author baumato
@@ -11,31 +8,36 @@ import java.io.UncheckedIOException;
 public class ConsolePrinter {
 
 	private final Animator animation;
+	private volatile boolean verbose;
 
 	public ConsolePrinter() {
-		animation = new Animator();
+		this.animation = new Animator();
+		this.verbose = false;
+	}
+
+	public void setIsVerbose(boolean verbose) {
+		this.verbose = verbose;
 	}
 
 	public void startProgress() {
-		animation.startAnimation();
+		if (!verbose) {
+			animation.startAnimation();
+		}
 	}
 
 	public void done(Object msg) {
-		stopProgress();
+		animation.stopAnimation();
 		System.out.println(String.valueOf(msg));
 	}
 
 	public void doneWithError(Object msg) {
-		stopProgress();
+		animation.stopAnimation();
 		System.err.println(String.valueOf(msg));
 	}
 
-	private void stopProgress() {
-		animation.stopAnimation();
-		try {
-			System.out.write("\r".getBytes());
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
+	public void step(String msg) {
+		if (verbose) {
+			System.out.println(msg);
 		}
 	}
 }
