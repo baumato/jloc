@@ -4,6 +4,7 @@ import static de.baumato.loc.util.Throwables.getStackTraceAsString;
 
 import de.baumato.loc.configuration.Configuration;
 import de.baumato.loc.configuration.InvalidCommandLineArgumentsException;
+import de.baumato.loc.messages.Messages;
 import de.baumato.loc.printer.ConsolePrinter;
 
 /**

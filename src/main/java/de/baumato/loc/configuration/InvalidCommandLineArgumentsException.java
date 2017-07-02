@@ -7,7 +7,7 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.OptionHandlerFilter;
 
-import de.baumato.loc.Messages;
+import de.baumato.loc.messages.Messages;
 
 /**
  * Exception indicates invalid command line arguments.
