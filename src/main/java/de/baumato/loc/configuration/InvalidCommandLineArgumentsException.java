@@ -28,9 +28,10 @@ public final class InvalidCommandLineArgumentsException extends Exception {
 		PrintWriter pw = new PrintWriter(sw);
 		pw.println(e.getLocalizedMessage());
 		pw.println();
+		pw.println(Messages.USAGE.get());
 		parser.printUsage(pw, Messages.getResourceBundle(), OptionHandlerFilter.ALL);
 		pw.println();
-		pw.println("Example:");
+		pw.println(Messages.EXAMPLE.get());
 		pw.println(parser.printExample(OptionHandlerFilter.ALL, Messages.getResourceBundle()));
 		return sw.toString();
 	}

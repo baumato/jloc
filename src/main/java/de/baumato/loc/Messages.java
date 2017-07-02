@@ -12,12 +12,16 @@ import org.kohsuke.args4j.Localizable;
  *
  */
 public enum Messages implements Localizable {
-	DIR_DOES_NOT_EXIST, UNEXPECTED_ERROR;
+	DIR_DOES_NOT_EXIST, UNEXPECTED_ERROR, USAGE, EXAMPLE;
 
 	@Override
 	public String formatWithLocale(Locale locale, Object... args) {
 		ResourceBundle localized = ResourceBundle.getBundle("messages", locale);
 		return MessageFormat.format(localized.getString(name()), args);
+	}
+
+	public String get() {
+		return format();
 	}
 
 	@Override
