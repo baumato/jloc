@@ -1,6 +1,6 @@
 package de.baumato.loc;
 
-import static de.baumato.loc.Throwables.getStackTraceAsString;
+import static de.baumato.loc.util.Throwables.getStackTraceAsString;
 
 import de.baumato.loc.configuration.Configuration;
 import de.baumato.loc.configuration.InvalidCommandLineArgumentsException;

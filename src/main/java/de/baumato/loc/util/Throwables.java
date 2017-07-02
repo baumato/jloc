@@ -1,4 +1,4 @@
-package de.baumato.loc;
+package de.baumato.loc.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,7 +14,7 @@ public class Throwables {
 		// prevent instantiation
 	}
 
-	static String getStackTraceAsString(Exception e) {
+	public static String getStackTraceAsString(Exception e) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		e.printStackTrace(pw);
