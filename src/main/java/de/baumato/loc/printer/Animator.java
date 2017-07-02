@@ -1,6 +1,7 @@
 package de.baumato.loc.printer;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -37,11 +38,19 @@ final class Animator extends Thread {
 	}
 
 	public void stopAnimation() {
+		if (!isAlive()) {
+			return;
+		}
 		interrupt();
 		try {
 			this.join();
 		} catch (InterruptedException e) {
 			interrupt();
+		}
+		try {
+			System.out.write("\r".getBytes());
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
 	}
 }
