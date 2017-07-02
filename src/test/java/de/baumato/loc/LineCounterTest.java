@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import de.baumato.loc.configuration.Configuration;
+import de.baumato.loc.printer.ConsolePrinter;
 
 public class LineCounterTest {
 
@@ -13,7 +14,9 @@ public class LineCounterTest {
 
 	@Test
 	public void testCount() throws Exception {
-		LineCounter lc = new LineCounter(Configuration.ofCmdLine("-d", folder.getRoot().toString()));
+		LineCounter lc = new LineCounter(
+			Configuration.ofCmdLine("-d", folder.getRoot().toString()),
+			new ConsolePrinter());
 	}
 
 }
