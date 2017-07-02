@@ -5,6 +5,7 @@ import static de.baumato.loc.Messages.DIR_DOES_NOT_EXIST;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -29,14 +30,15 @@ public class Configuration {
 			aliases = { "--directory" })
 	private Path directory;
 
-	static Configuration ofCmdLine(String[] args) {
+	static Optional<Configuration> ofCmdLine(String... args) {
 		Configuration conf = new Configuration();
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
 		try {
 			parser.parseArgument(args);
-			if (!Files.exists(conf.directory)) {
+			if (!Files.isDirectory(conf.directory)) {
 				throw new CmdLineException(parser, DIR_DOES_NOT_EXIST, conf.directory.toString());
 			}
+			return Optional.of(conf);
 		} catch (CmdLineException e) {
 			System.err.println(e.getLocalizedMessage());
 			System.err.println();
@@ -46,9 +48,8 @@ public class Configuration {
 			System.err.println();
 			System.err.println("Example:");
 			System.err.println(parser.printExample(OptionHandlerFilter.ALL, Messages.getResourceBundle()));
-			System.exit(1);
+			return Optional.empty();
 		}
-		return conf;
 	}
 
 	Path getDirectory() {
