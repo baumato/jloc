@@ -5,10 +5,17 @@
 Counts the lines of code of all java files within one directory recursively.
 
 ## Build
+Linux
 
 ```
 > mvnw clean package
 ```
+Windows
+
+```
+> mvnw.cmd clean package
+```
+
 ## Usage
 
 ```
