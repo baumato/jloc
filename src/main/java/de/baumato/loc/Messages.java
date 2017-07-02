@@ -12,7 +12,7 @@ import org.kohsuke.args4j.Localizable;
  *
  */
 public enum Messages implements Localizable {
-	DIR_DOES_NOT_EXIST;
+	DIR_DOES_NOT_EXIST, UNEXPECTED_ERROR;
 
 	@Override
 	public String formatWithLocale(Locale locale, Object... args) {
