@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/license-Eclipse-brightgreen.svg) ](https://choosealicense.com/licenses/mit/)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg) ](https://choosealicense.com/licenses/mit/)
 [![Build Status](https://travis-ci.org/baumato/lines-of-code.png?branch=master)](https://travis-ci.org/baumato/lines-of-code)
 
 # lines-of-code
