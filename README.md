@@ -4,13 +4,12 @@
 # lines-of-code
 Counts the lines of code of all java files within one directory recursively.
 
-## Intallation
-Build
+## Build
 
 ```
 > mvnw clean package
 ```
-Usage
+## Usage
 
 ```
 > java -jar lines-of-code*.jar -d /path/to/directory/
