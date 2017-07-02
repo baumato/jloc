@@ -1,7 +1,6 @@
 package de.baumato.loc;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import static de.baumato.loc.Throwables.getStackTraceAsString;
 
 import de.baumato.loc.Configuration.InvalidCommandLineArgumentsException;
 
@@ -24,10 +23,4 @@ public class App {
 		}
 	}
 
-	private static String getStackTraceAsString(Exception e) {
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
-		return sw.toString();
-	}
 }
