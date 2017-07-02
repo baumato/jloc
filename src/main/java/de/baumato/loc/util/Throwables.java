@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
+ * Utility methods dealing with Throwables.
  *
  * @author baumato
  *
