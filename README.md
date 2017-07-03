@@ -21,5 +21,5 @@ Counts the lines of code of all java files within one directory recursively.
 ## Usage
 
 ```
-> java -jar ./target/lines-of-code*-shaded.jar -d ~/git/Worttoffel
+> java -jar ./target/lines-of-code*-shaded.jar -d /path/to/your/directory
 ```
