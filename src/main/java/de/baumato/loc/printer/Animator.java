@@ -29,7 +29,7 @@ final class Animator extends Thread {
 
 	private static byte[] toProgress(Iterator<Character> infiniteSymbols) {
 		char c = infiniteSymbols.next().charValue();
-		String progress = "\r " + c + " ";
+		String progress = c + " \r";
 		return progress.getBytes(StandardCharsets.UTF_8);
 	}
 
