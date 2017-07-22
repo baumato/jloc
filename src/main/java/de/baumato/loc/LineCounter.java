@@ -25,7 +25,6 @@ public class LineCounter {
 	}
 
 	public long count() {
-		printer.step("sep=;");
 		printer.step(Messages.FILE.get() + ";" + Messages.COUNT.get());
 		long sum = countLinesInDir(conf.getDirectory(), conf.getExcludeDirs());
 		printer.step(Messages.SUM.get() + ";" + sum);
