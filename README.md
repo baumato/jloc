@@ -21,6 +21,10 @@ Java 8
 ```
 > mvnw.cmd clean package
 ```
+## Download
+
+Download .jsh (directly executable on linux) or .jar file from [release folder](https://git.io/v7kjZ).
+
 
 ## Usage
 
