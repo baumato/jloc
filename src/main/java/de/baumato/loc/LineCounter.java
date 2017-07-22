@@ -53,12 +53,12 @@ public class LineCounter {
 	}
 
 	private long countLinesInFile(Path p) {
-		long count = countLinesInFile3(p);
+		long count = countLinesInFile0(p);
 		printer.step(p.toString() + ";" + count);
 		return count;
 	}
 
-	private static long countLinesInFile3(Path p) {
+	private static long countLinesInFile0(Path p) {
 		/*
 		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results
 		 * to java.nio.charset.MalformedInputException when a file has not the default charset. We can use new
