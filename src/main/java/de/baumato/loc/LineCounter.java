@@ -1,13 +1,17 @@
 package de.baumato.loc;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.stream.Stream;
 
 import de.baumato.loc.configuration.Configuration;
+import de.baumato.loc.messages.Messages;
 import de.baumato.loc.printer.ConsolePrinter;
 
 public class LineCounter {
@@ -21,14 +25,17 @@ public class LineCounter {
 	}
 
 	public long count() {
-		return countLinesInDir(conf.getDirectory(), conf.getExcludeDirs());
+		printer.step("sep=;");
+		printer.step(Messages.FILE.get() + ";" + Messages.COUNT.get());
+		long sum = countLinesInDir(conf.getDirectory(), conf.getExcludeDirs());
+		printer.step(Messages.SUM.get() + ";" + sum);
+		return sum;
 	}
 
 	private long countLinesInDir(Path dir, Collection<String> excludeDirs) {
 		try (Stream<Path> paths = Files.walk(dir)) {
 			long sum = paths.filter(p -> p.getFileName().toString().endsWith(".java"))
 				.filter(p -> !pathContainsOneOfDirs(p, excludeDirs))
-				.peek(p -> printer.step(p.toString()))
 				.mapToLong(p -> countLinesInFile(p))
 				.sum();
 			return sum;
@@ -46,11 +53,27 @@ public class LineCounter {
 		return false;
 	}
 
-	private static long countLinesInFile(Path p) {
-		try (Stream<String> lines = Files.lines(p)) {
-			return lines.count();
-		} catch (IOException | RuntimeException e) {
-			throw new RuntimeException("Error during processing: " + p, e);
+	private long countLinesInFile(Path p) {
+		long count = countLinesInFile3(p);
+		printer.step(p.toString() + ";" + count);
+		return count;
+	}
+
+	private static long countLinesInFile3(Path p) {
+		/*
+		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results
+		 * to java.nio.charset.MalformedInputException when a file has not the default charset. We can use new
+		 * Scanner(p) but the scanner is slower than using BufferedReader like below.
+		 */
+		try (BufferedReader reader = new BufferedReader(
+			new InputStreamReader(Files.newInputStream(p, StandardOpenOption.READ)))) {
+			int count = 0;
+			while (reader.readLine() != null) {
+				count++;
+			}
+			return count;
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
 	}
 }
