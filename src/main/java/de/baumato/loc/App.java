@@ -22,7 +22,9 @@ public class App {
 			printer.setIsVerbose(conf.isVerbose());
 			printer.startProgress();
 			long numberOfLines = new LineCounter(conf, printer).count();
-			printer.done(numberOfLines);
+			if (!conf.isVerbose()) {
+				printer.done(numberOfLines);
+			}
 		} catch (InvalidCommandLineArgumentsException e) {
 			printer.doneWithError(e.getLocalizedMessage());
 		} catch (RuntimeException e) {
