@@ -4,6 +4,10 @@
 # lines-of-code
 Counts the lines of code of all java files within one directory recursively.
 
+## Requirements
+
+Java 8
+
 ## Build
 
 - Clone or [download this repository](https://github.com/baumato/lines-of-code/archive/master.zip).
@@ -21,5 +25,23 @@ Counts the lines of code of all java files within one directory recursively.
 ## Usage
 
 ```
-> java -jar ./target/lines-of-code*-shaded.jar -d /path/to/your/directory
+Usage:
+ -d (--directory) PATH           : The directory to be recursively scanned.
+ -e (--excludeDirs) FOLDER_NAMES : Folder to be omitted
+ -v (--verbose) BOOLEAN          : Verbose (default: false)
+
+Example:
+ -d (--directory) PATH -e (--excludeDirs) FOLDER_NAMES -v (--verbose) BOOLEAN
+```
+
+Example (on Linux):
+
+```
+> lines-of-code.jsh -d /path/to/your/directory -e target bin -v
+```
+
+Example (every system):
+
+```
+> java -jar ./target/lines-of-code.jar -d /path/to/your/directory -e target bin -v
 ```
