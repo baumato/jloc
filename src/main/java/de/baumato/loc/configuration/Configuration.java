@@ -54,7 +54,7 @@ public class Configuration {
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
 		try {
 			parser.parseArgument(args);
-			if (!conf.directory.toFile().exists()) {
+			if (!conf.directory.toFile().isDirectory()) {
 				throw new CmdLineException(parser, DIR_DOES_NOT_EXIST, conf.directory.toString());
 			}
 			return conf;
