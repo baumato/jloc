@@ -13,15 +13,13 @@ final class Animator extends Thread {
 	@Override
 	public void run() {
 		Iterator<Character> infiniteSymbols = Stream.iterate(0, i -> (i + 1) % SYMOBLS.length())
-			.map(i -> SYMOBLS.charAt(i))
+			.map(SYMOBLS::charAt)
 			.iterator();
 		while (!isInterrupted()) {
 			try {
 				System.out.write(toProgress(infiniteSymbols));
 				Thread.sleep(100);
-			} catch (IOException e) {
-				interrupt();
-			} catch (InterruptedException e) {
+			} catch (IOException | InterruptedException e) {
 				interrupt();
 			}
 		}
