@@ -2,6 +2,7 @@ package de.baumato.loc.configuration;
 
 import static de.baumato.loc.messages.Messages.DIR_DOES_NOT_EXIST;
 
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +13,10 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.ParserProperties;
 import org.kohsuke.args4j.spi.StringArrayOptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.impl.SimpleLogger;
+import org.slf4j.spi.LocationAwareLogger;
 
 /**
  * Holds the command line arguments
@@ -49,6 +54,15 @@ public class Configuration {
 			aliases = { "--verbose" })
 	private boolean verbose;
 
+	@Option(
+			name = "-X",
+			required = false,
+			usage = "ARGUMENT_DEBUG_OUTPUT",
+			metaVar = "BOOLEAN",
+			hidden = false,
+			aliases = { "--debug" })
+	private boolean debug;
+
 	public static Configuration ofCmdLine(String... args) throws InvalidCommandLineArgumentsException {
 		Configuration conf = new Configuration();
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
@@ -57,10 +71,27 @@ public class Configuration {
 			if (!conf.directory.toFile().isDirectory()) {
 				throw new CmdLineException(parser, DIR_DOES_NOT_EXIST, conf.directory.toString());
 			}
-			return conf;
 		} catch (CmdLineException e) {
 			throw new InvalidCommandLineArgumentsException(parser, e);
 		}
+		configureAppLogger(conf);
+		return conf;
+	}
+
+	private static void configureAppLogger(Configuration conf) {
+		try {
+			SimpleLogger logger = (SimpleLogger) conf.getAppLogger();
+			Field f = SimpleLogger.class.getDeclaredField("currentLogLevel");
+			f.setAccessible(true);
+			int level = conf.debug ? LocationAwareLogger.TRACE_INT : LocationAwareLogger.ERROR_INT;
+			f.set(logger, level);
+		} catch (NoSuchFieldException | IllegalAccessException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	public Logger getAppLogger() {
+		return LoggerFactory.getLogger("App");
 	}
 
 	public Path getDirectory() {
