@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-#jar_file=./target/lines-of-code-1.0.0-SNAPSHOT-shaded.jar
 jar_file=$1
-#exec_file_name="`basename $jar_file .jar`.jsh"
-#exec_file=./target/$exec_file_name
 exec_file=$2
 
 echo "jar file = $jar_file"
