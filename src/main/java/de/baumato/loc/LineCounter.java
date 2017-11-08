@@ -1,18 +1,22 @@
 package de.baumato.loc;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.stream.Stream;
+
+import com.github.javaparser.JavaParser;
 
 import de.baumato.loc.configuration.Configuration;
 import de.baumato.loc.messages.Messages;
 import de.baumato.loc.printer.ConsolePrinter;
+import de.baumato.loc.util.MorePaths;
 
 public class LineCounter {
 
@@ -52,20 +56,19 @@ public class LineCounter {
 	}
 
 	private long countLinesInFile(Path p) {
-		long count = countLinesInFile0(p);
+		long count = countLines(p);
 		printer.step(p.toString() + ";" + count);
 		return count;
 	}
 
 	@SuppressWarnings("squid:S2677") // the returned value from readLine should not be used here
-	private static long countLinesInFile0(Path p) {
+	static long countLines(Path p) {
 		/*
-		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results
-		 * to java.nio.charset.MalformedInputException when a file has not the default charset. We can use new
+		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results to
+		 * java.nio.charset.MalformedInputException when a file has not the default charset. We can use new
 		 * Scanner(p) but the scanner is slower than using BufferedReader like below.
 		 */
-		try (BufferedReader reader = new BufferedReader(
-			new InputStreamReader(Files.newInputStream(p, StandardOpenOption.READ)))) {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFile(p)))) {
 			int count = 0;
 			while (reader.readLine() != null) {
 				count++;
@@ -75,4 +78,20 @@ public class LineCounter {
 			throw new UncheckedIOException(e);
 		}
 	}
+
+	private static InputStream readFile(Path p) {
+		try {
+			final byte[] fileContent;
+			if (MorePaths.endsWithIgnoreCase(p, ".java")) {
+				// normalize java file by parsing it and then converting it to String
+				fileContent = JavaParser.parse(p).toString().getBytes();
+			} else {
+				fileContent = Files.readAllBytes(p);
+			}
+			return new ByteArrayInputStream(fileContent);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
+	}
+
 }
