@@ -23,7 +23,7 @@ public class App {
 			printer.startProgress();
 			long numberOfLines = new LineCounter(conf, printer).count();
 			if (!conf.isVerbose()) {
-				printer.done(numberOfLines);
+				printer.done(String.valueOf(numberOfLines));
 			}
 		} catch (InvalidCommandLineArgumentsException e) {
 			printer.doneWithError(e.getLocalizedMessage());

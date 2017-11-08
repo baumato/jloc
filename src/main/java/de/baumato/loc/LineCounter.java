@@ -85,7 +85,7 @@ public class LineCounter {
 			if (MorePaths.endsWithIgnoreCase(p, ".java")) {
 				// normalize java file by parsing it and then converting it to String
 				fileContent = JavaParser.parse(p).toString().getBytes();
-				printer.step(p.toString() + " has been normalized");
+				conf.getAppLogger().trace("{} has been normalized", p);
 			} else {
 				fileContent = Files.readAllBytes(p);
 			}
