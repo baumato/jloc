@@ -35,7 +35,7 @@ public class LineCounter {
 		try (Stream<Path> paths = Files.walk(dir)) {
 			return paths.filter(p -> p.getFileName().toString().endsWith(".java"))
 				.filter(p -> !pathContainsOneOfDirs(p, excludeDirs))
-				.mapToLong(p -> countLinesInFile(p))
+				.mapToLong(this::countLinesInFile)
 				.sum();
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
