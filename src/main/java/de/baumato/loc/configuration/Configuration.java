@@ -2,7 +2,6 @@ package de.baumato.loc.configuration;
 
 import static de.baumato.loc.messages.Messages.DIR_DOES_NOT_EXIST;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,7 +54,7 @@ public class Configuration {
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
 		try {
 			parser.parseArgument(args);
-			if (!Files.isDirectory(conf.directory)) {
+			if (!conf.directory.toFile().exists()) {
 				throw new CmdLineException(parser, DIR_DOES_NOT_EXIST, conf.directory.toString());
 			}
 			return conf;
