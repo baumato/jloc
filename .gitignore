@@ -26,3 +26,6 @@ hs_err_pid*
 
 # build artifacts
 *.jsh
+
+# security-related files
+.sonarcloud.io.token
