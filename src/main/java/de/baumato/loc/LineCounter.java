@@ -33,11 +33,10 @@ public class LineCounter {
 
 	private long countLinesInDir(Path dir, Collection<String> excludeDirs) {
 		try (Stream<Path> paths = Files.walk(dir)) {
-			long sum = paths.filter(p -> p.getFileName().toString().endsWith(".java"))
+			return paths.filter(p -> p.getFileName().toString().endsWith(".java"))
 				.filter(p -> !pathContainsOneOfDirs(p, excludeDirs))
 				.mapToLong(p -> countLinesInFile(p))
 				.sum();
-			return sum;
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
