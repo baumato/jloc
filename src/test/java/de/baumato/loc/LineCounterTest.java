@@ -1,22 +1,31 @@
 package de.baumato.loc;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import de.baumato.loc.configuration.Configuration;
-import de.baumato.loc.printer.ConsolePrinter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.junit.Test;
+
+import com.github.javaparser.JavaParser;
 
 public class LineCounterTest {
 
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
+	private final Path unformatted = Paths.get("src/test/resources/SomeClass.unformatted.java");
+	private final Path formatted = Paths.get("src/test/resources/SomeClass.formatted.java");
 
 	@Test
-	public void testCount() throws Exception {
-		LineCounter lc = new LineCounter(
-			Configuration.ofCmdLine("-d", folder.getRoot().toString()),
-			new ConsolePrinter());
+	public void shouldReadJavaFileAfterApplyingDefaultFormatter() throws Exception {
+		String expected = JavaParser.parse(unformatted).toString();
+		String actual = new String(Files.readAllBytes(formatted));
+		assertThat(actual).isEqualTo(expected);
 	}
 
+	@Test
+	public void shouldReadJavaFileAfterApplyingDefaultFormatter2() throws Exception {
+		long uc = LineCounter.countLines(unformatted);
+		long fc = LineCounter.countLines(formatted);
+		assertThat(uc).isEqualTo(fc).isEqualTo(31);
+	}
 }
