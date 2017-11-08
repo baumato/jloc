@@ -5,6 +5,7 @@ package de.baumato.loc.printer;
  * @author baumato
  *
  */
+@SuppressWarnings("squid:S106") // Allow to use System.out since, this is console printer
 public class ConsolePrinter {
 
 	private final Animator animation;

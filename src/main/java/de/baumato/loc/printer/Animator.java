@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+@SuppressWarnings("squid:S106") // Allow to use System.out since, this is console printer
 final class Animator extends Thread {
 
 	private static final String SYMOBLS = "|/⎯\\";
