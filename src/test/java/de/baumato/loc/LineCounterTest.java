@@ -6,14 +6,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.github.javaparser.JavaParser;
+
+import de.baumato.loc.configuration.Configuration;
+import de.baumato.loc.printer.ConsolePrinter;
 
 public class LineCounterTest {
 
 	private final Path unformatted = Paths.get("src/test/resources/SomeClass.unformatted.java");
 	private final Path formatted = Paths.get("src/test/resources/SomeClass.formatted.java");
+
+	private LineCounter lc;
+
+	@Before
+	public void setup() {
+		lc = new LineCounter(new Configuration(), new ConsolePrinter());
+	}
 
 	@Test
 	public void shouldReadJavaFileAfterApplyingDefaultFormatter() throws Exception {
@@ -24,8 +35,8 @@ public class LineCounterTest {
 
 	@Test
 	public void shouldReadJavaFileAfterApplyingDefaultFormatter2() throws Exception {
-		long uc = LineCounter.countLines(unformatted);
-		long fc = LineCounter.countLines(formatted);
+		long uc = lc.countLines(unformatted);
+		long fc = lc.countLines(formatted);
 		assertThat(uc).isEqualTo(fc).isEqualTo(31);
 	}
 }

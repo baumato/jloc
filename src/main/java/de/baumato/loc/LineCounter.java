@@ -62,13 +62,13 @@ public class LineCounter {
 	}
 
 	@SuppressWarnings("squid:S2677") // the returned value from readLine should not be used here
-	static long countLines(Path p) {
+	long countLines(Path p) {
 		/*
 		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results to
 		 * java.nio.charset.MalformedInputException when a file has not the default charset. We can use new
 		 * Scanner(p) but the scanner is slower than using BufferedReader like below.
 		 */
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFile(p)))) {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFileNormalized(p)))) {
 			int count = 0;
 			while (reader.readLine() != null) {
 				count++;
@@ -79,12 +79,13 @@ public class LineCounter {
 		}
 	}
 
-	private static InputStream readFile(Path p) {
+	private InputStream readFileNormalized(Path p) {
 		try {
 			final byte[] fileContent;
 			if (MorePaths.endsWithIgnoreCase(p, ".java")) {
 				// normalize java file by parsing it and then converting it to String
 				fileContent = JavaParser.parse(p).toString().getBytes();
+				printer.step(p.toString() + " has been normalized");
 			} else {
 				fileContent = Files.readAllBytes(p);
 			}
