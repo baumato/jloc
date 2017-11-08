@@ -57,6 +57,7 @@ public class LineCounter {
 		return count;
 	}
 
+	@SuppressWarnings("squid:S2677") // the returned value from readLine should not be used here
 	private static long countLinesInFile0(Path p) {
 		/*
 		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results
