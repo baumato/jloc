@@ -58,8 +58,15 @@ public class LineCounterTest {
 	public void shouldExcludeFoldersSpecifiedInConfiguration() throws Exception {
 		Path p = Paths.get("src/test/resources");
 		lc = new LineCounter(
-			Configuration.ofCmdLine("-d", p.toString(), "-e", "container"),
+			Configuration.ofCmdLine("-d", p.toString(), "-e", "container", "sloc"),
 			new ConsolePrinter());
 		assertThat(lc.count()).isEqualTo(62);
+	}
+
+	@Test
+	public void shouldCountSourceLinesOfCode() throws Exception {
+		Path p = Paths.get("src/test/resources/sloc");
+		lc = new LineCounter(Configuration.ofCmdLine("-d", p.toString(), "-cm", "sloc"), new ConsolePrinter());
+		assertThat(lc.count()).isEqualTo(20);
 	}
 }

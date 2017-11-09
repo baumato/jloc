@@ -4,6 +4,9 @@
 
 # lines-of-code
 Counts the lines of code of all java files within one directory recursively.
+This application either counts physical lines of code or the source lines of code (without the empty lines
+and without the comments).
+Before counting the lines the java files get parsed and formatted to ensure comparability between projects. 
 
 ## Requirements
 
@@ -31,22 +34,24 @@ Download .jsh (directly executable on linux) or .jar file from [release folder](
 
 ```
 Usage:
- -d (--directory) PATH           : The directory to be recursively scanned.
- -e (--excludeDirs) FOLDER_NAMES : Folder to be omitted
- -v (--verbose) BOOLEAN          : Verbose (default: false)
+ -X (--debug) BOOLEAN                  : Produce execution debug output (default: false)
+ -cm (--calculation-mode) [LOC | SLOC] : Mode of calculation, either loc or sloc (w/o empty lines and comments) (default: LOC)
+ -d (--directory) PATH                 : The directory to be recursively scanned.
+ -e (--excludeDirs) FOLDER_NAMES       : Folder to be omitted
+ -v (--verbose) BOOLEAN                : Verbose (default: false)
 
 Example:
- -d (--directory) PATH -e (--excludeDirs) FOLDER_NAMES -v (--verbose) BOOLEAN
+ -X (--debug) BOOLEAN -cm (--calculation-mode) [LOC | SLOC] -d (--directory) PATH -e (--excludeDirs) FOLDER_NAMES -v (--verbose) BOOLEAN
 ```
 
 Example (on Linux):
 
 ```
-> lines-of-code.jsh -d /path/to/your/directory -e target bin -v
+> lines-of-code.jsh -d /path/to/your/directory -e target bin -cm sloc
 ```
 
 Example (every system):
 
 ```
-> java -jar ./target/lines-of-code.jar -d /path/to/your/directory -e target bin -v
+> java -jar ./target/lines-of-code.jar -d /path/to/your/directory -e target bin -cm sloc
 ```
