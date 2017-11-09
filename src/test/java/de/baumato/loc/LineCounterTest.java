@@ -53,4 +53,13 @@ public class LineCounterTest {
 		lc = new LineCounter(Configuration.ofCmdLine("-d", p.toString()), new ConsolePrinter());
 		assertThat(lc.count()).isEqualTo(31);
 	}
+
+	@Test
+	public void shouldExcludeFoldersSpecifiedInConfiguration() throws Exception {
+		Path p = Paths.get("src/test/resources");
+		lc = new LineCounter(
+			Configuration.ofCmdLine("-d", p.toString(), "-e", "container"),
+			new ConsolePrinter());
+		assertThat(lc.count()).isEqualTo(62);
+	}
 }
