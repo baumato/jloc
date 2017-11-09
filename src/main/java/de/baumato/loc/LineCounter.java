@@ -1,5 +1,7 @@
 package de.baumato.loc;
 
+import static de.baumato.loc.util.MorePaths.endsWithIgnoreCase;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,7 +18,6 @@ import com.github.javaparser.JavaParser;
 import de.baumato.loc.configuration.Configuration;
 import de.baumato.loc.messages.Messages;
 import de.baumato.loc.printer.ConsolePrinter;
-import de.baumato.loc.util.MorePaths;
 
 public class LineCounter {
 
@@ -37,7 +38,7 @@ public class LineCounter {
 
 	private long countLinesInDir(Path dir, Collection<String> excludeDirs) {
 		try (Stream<Path> paths = Files.walk(dir)) {
-			return paths.filter(p -> p.getFileName().toString().endsWith(".java"))
+			return paths.filter(p -> endsWithIgnoreCase(p, ".java"))
 				.filter(p -> !pathContainsOneOfDirs(p, excludeDirs))
 				.mapToLong(this::countLinesInFile)
 				.sum();
@@ -81,14 +82,9 @@ public class LineCounter {
 
 	private InputStream readFileNormalized(Path p) {
 		try {
-			final byte[] fileContent;
-			if (MorePaths.endsWithIgnoreCase(p, ".java")) {
-				// normalize java file by parsing it and then converting it to String
-				fileContent = JavaParser.parse(p).toString().getBytes();
-				conf.getAppLogger().trace("{} has been normalized", p);
-			} else {
-				fileContent = Files.readAllBytes(p);
-			}
+			// normalize java file by parsing it and then converting it to String
+			byte[] fileContent = JavaParser.parse(p).toString().getBytes();
+			conf.getAppLogger().trace("{} has been normalized", p);
 			return new ByteArrayInputStream(fileContent);
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);

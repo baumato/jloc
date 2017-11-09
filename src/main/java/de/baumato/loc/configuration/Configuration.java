@@ -106,6 +106,10 @@ public class Configuration {
 		return verbose;
 	}
 
+	boolean isDebugEnabled() {
+		return debug;
+	}
+
 	@Override
 	public String toString() {
 		return new StringBuilder().append(getClass().getSimpleName())

@@ -39,4 +39,18 @@ public class LineCounterTest {
 		long fc = lc.countLines(formatted);
 		assertThat(uc).isEqualTo(fc).isEqualTo(31);
 	}
+
+	@Test
+	public void shouldCountJavaFilesOnly() throws Exception {
+		Path p = Paths.get("src/test/resources/container/dir");
+		lc = new LineCounter(Configuration.ofCmdLine("-d", p.toString()), new ConsolePrinter());
+		assertThat(lc.count()).isZero();
+	}
+
+	@Test
+	public void shouldCount() throws Exception {
+		Path p = Paths.get("src/test/resources/container");
+		lc = new LineCounter(Configuration.ofCmdLine("-d", p.toString()), new ConsolePrinter());
+		assertThat(lc.count()).isEqualTo(31);
+	}
 }
