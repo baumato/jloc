@@ -63,6 +63,15 @@ public class Configuration {
 			aliases = { "--debug" })
 	private boolean debug;
 
+	@Option(
+			name = "-cm",
+			required = false,
+			usage = "ARGUMENT_CALCULATION_MODE",
+			// metaVar = "STRING",
+			hidden = false,
+			aliases = { "--calculation-mode" })
+	private CalculationMode calculationMode = CalculationMode.LOC;
+
 	public static Configuration ofCmdLine(String... args) throws InvalidCommandLineArgumentsException {
 		Configuration conf = new Configuration();
 		CmdLineParser parser = new CmdLineParser(conf, ParserProperties.defaults().withUsageWidth(80));
@@ -110,15 +119,22 @@ public class Configuration {
 		return debug;
 	}
 
+	public CalculationMode getCalculationMode() {
+		return calculationMode;
+	}
+
 	@Override
 	public String toString() {
-		return new StringBuilder().append(getClass().getSimpleName())
-			.append(" [directory=")
+		return new StringBuilder().append("Configuration [directory=")
 			.append(directory)
 			.append(", excludeDirs=")
 			.append(excludeDirs)
 			.append(", verbose=")
 			.append(verbose)
+			.append(", debug=")
+			.append(debug)
+			.append(", calculationMode=")
+			.append(calculationMode)
 			.append("]")
 			.toString();
 	}

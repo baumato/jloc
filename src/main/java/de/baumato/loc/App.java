@@ -19,6 +19,7 @@ public class App {
 		ConsolePrinter printer = new ConsolePrinter();
 		try {
 			Configuration conf = Configuration.ofCmdLine(args);
+			conf.getAppLogger().debug("configuration={}", conf);
 			printer.setIsVerbose(conf.isVerbose());
 			printer.startProgress();
 

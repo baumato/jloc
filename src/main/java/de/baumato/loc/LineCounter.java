@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.comments.Comment;
 
 import de.baumato.loc.configuration.Configuration;
 import de.baumato.loc.messages.Messages;
@@ -31,15 +33,15 @@ public class LineCounter {
 
 	public long count() {
 		printer.step(Messages.FILE.get() + ";" + Messages.COUNT.get());
-		long sum = countLinesInDir(conf.getDirectory(), conf.getExcludeDirs());
+		long sum = countLinesInDir();
 		printer.step(Messages.SUM.get() + ";" + sum);
 		return sum;
 	}
 
-	private long countLinesInDir(Path dir, Collection<String> excludeDirs) {
-		try (Stream<Path> paths = Files.walk(dir)) {
+	private long countLinesInDir() {
+		try (Stream<Path> paths = Files.walk(conf.getDirectory())) {
 			return paths.filter(p -> endsWithIgnoreCase(p, ".java"))
-				.filter(p -> !pathContainsOneOfDirs(p, excludeDirs))
+				.filter(p -> !pathContainsOneOfDirs(p, conf.getExcludeDirs()))
 				.mapToLong(this::countLinesInFile)
 				.sum();
 		} catch (IOException e) {
@@ -62,7 +64,6 @@ public class LineCounter {
 		return count;
 	}
 
-	@SuppressWarnings("squid:S2677") // the returned value from readLine should not be used here
 	long countLines(Path p) {
 		/*
 		 * We cannot use Files.lines because that uses BufferedReader with the default charset and this results to
@@ -71,8 +72,15 @@ public class LineCounter {
 		 */
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFileNormalized(p)))) {
 			int count = 0;
-			while (reader.readLine() != null) {
-				count++;
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				if (line.trim().isEmpty()) {
+					if (countEmptyLines()) {
+						count++;
+					}
+				} else {
+					count++;
+				}
 			}
 			return count;
 		} catch (IOException e) {
@@ -83,7 +91,11 @@ public class LineCounter {
 	private InputStream readFileNormalized(Path p) {
 		try {
 			// normalize java file by parsing it and then converting it to String
-			byte[] fileContent = JavaParser.parse(p).toString().getBytes();
+			CompilationUnit cu = JavaParser.parse(p);
+			if (!countComments()) {
+				removeAllComments(cu);
+			}
+			byte[] fileContent = cu.toString().getBytes();
 			conf.getAppLogger().trace("{} has been normalized", p);
 			return new ByteArrayInputStream(fileContent);
 		} catch (IOException e) {
@@ -91,4 +103,15 @@ public class LineCounter {
 		}
 	}
 
+	private boolean countComments() {
+		return conf.getCalculationMode().countComments;
+	}
+
+	private static void removeAllComments(CompilationUnit cu) {
+		cu.getAllContainedComments().forEach(Comment::remove);
+	}
+
+	private boolean countEmptyLines() {
+		return conf.getCalculationMode().countEmptyLines;
+	}
 }
