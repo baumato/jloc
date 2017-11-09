@@ -1,0 +1,39 @@
+package de.baumato.loc;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.nio.file.Paths;
+import java.util.Locale;
+
+import org.junit.Rule;
+import org.junit.Test;
+
+import de.baumato.loc.SystemStreamRedirectionRule.SystemStream;
+
+public class AppTest {
+
+	@Rule
+	public SystemStreamRedirectionRule sysout = new SystemStreamRedirectionRule(SystemStream.OUT);
+
+	@Rule
+	public SystemStreamRedirectionRule syserr = new SystemStreamRedirectionRule(SystemStream.ERR);
+
+	@Test
+	public void shouldRun() throws Exception {
+		App.main("-d", Paths.get("src/test/resources/container").toString());
+		assertThat(sysout.getLastLine()).isEqualTo("31");
+	}
+
+	@Test
+	public void shouldRunInVerboseMode() throws Exception {
+		Locale.setDefault(Locale.ENGLISH);
+		App.main("-v", "-d", Paths.get("src/test/resources/container").toString());
+		assertThat(sysout.getLastLine()).isEqualTo("Sum;31");
+	}
+
+	@Test
+	public void showErrorWhenInvalidCommandLineGiven() throws Exception {
+		App.main("--unknown");
+		assertThat(syserr.get()).contains("--unknown");
+	}
+}
