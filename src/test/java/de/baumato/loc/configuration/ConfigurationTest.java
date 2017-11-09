@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.slf4j.impl.SimpleLogger;
 
 public class ConfigurationTest {
 
@@ -57,6 +58,24 @@ public class ConfigurationTest {
 		File file = tempFolder.getRoot();
 		Configuration conf = Configuration.ofCmdLine("-d", file.getPath(), "-e", "target", "bin");
 		assertThat(conf.getExcludeDirs()).hasSameElementsAs(Arrays.asList("target", "bin"));
+	}
+
+	@Test
+	public void shouldInitVerboseFlag() throws Exception {
+		Configuration c = Configuration.ofCmdLine("-d", tempFolder.getRoot().getPath(), "-v");
+		assertThat(c.isVerbose()).isTrue();
+	}
+
+	@Test
+	public void shouldInitAppLogger() throws Exception {
+		Configuration c = Configuration.ofCmdLine("-d", tempFolder.getRoot().getPath(), "-v");
+		assertThat(c.getAppLogger()).isInstanceOf(SimpleLogger.class);
+
+		c = Configuration.ofCmdLine("-d", tempFolder.getRoot().getPath(), "-v");
+		assertThat(c.isDebugEnabled()).isFalse();
+
+		c = Configuration.ofCmdLine("-d", tempFolder.getRoot().getPath(), "-X");
+		assertThat(c.isDebugEnabled()).isTrue();
 	}
 
 	@Test
