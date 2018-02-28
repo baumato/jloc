@@ -10,10 +10,12 @@ import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.stream.Stream;
 
 import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.comments.Comment;
 
@@ -41,9 +43,9 @@ public class LineCounter {
 	private long countLinesInDir() {
 		try (Stream<Path> paths = Files.walk(conf.getDirectory())) {
 			return paths.filter(p -> endsWithIgnoreCase(p, ".java"))
-				.filter(p -> !pathContainsOneOfDirs(p, conf.getExcludeDirs()))
-				.mapToLong(this::countLinesInFile)
-				.sum();
+					.filter(p -> !pathContainsOneOfDirs(p, conf.getExcludeDirs()))
+					.mapToLong(this::countLinesInFile)
+					.sum();
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
@@ -98,8 +100,17 @@ public class LineCounter {
 			byte[] fileContent = cu.toString().getBytes();
 			conf.getAppLogger().trace("{} has been normalized", p);
 			return new ByteArrayInputStream(fileContent);
+		} catch (IOException | ParseProblemException e) {
+			conf.getAppLogger().error("Error during reading '{}'. Error was: {} => Fallback to simple counting.", p, e.getClass().getSimpleName());
+			return readFile(p);
+		}
+	}
+
+	private InputStream readFile(Path p) {
+		try {
+			return Files.newInputStream(p, StandardOpenOption.READ);
 		} catch (IOException e) {
-			throw new UncheckedIOException(e);
+			throw new UncheckedIOException("Error during reading: " + p, e);
 		}
 	}
 
