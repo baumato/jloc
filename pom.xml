@@ -96,7 +96,7 @@
 			<id>linux-executor</id>
 			<activation>
 				<os>
-					<family>!Windows</family>
+					<family>unix</family>
 				</os>
 			</activation>
 			<build>
