@@ -28,8 +28,8 @@ public class LineCounterTest {
 
 	@Test
 	public void shouldReadJavaFileAfterApplyingDefaultFormatter() throws Exception {
-		String expected = JavaParser.parse(unformatted).toString();
-		String actual = new String(Files.readAllBytes(formatted));
+		String expected = JavaParser.parse(unformatted).toString().replace("\r\n", "\n");
+		String actual = new String(Files.readAllBytes(formatted)).replace("\r\n", "\n");
 		assertThat(actual).isEqualTo(expected);
 	}
 
