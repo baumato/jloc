@@ -40,8 +40,8 @@ public class ConfigurationTest {
 
 	@Test
 	public void shouldNotCreateConfigurationWhenGivenDirDoesNotExist() throws Exception {
-		String unavailableDir = "/tmp/" + UUID.randomUUID();
-		Throwable t = catchThrowable(() -> Configuration.ofCmdLine("-d", unavailableDir));
+		String unavailableDir = UUID.randomUUID().toString();
+		Throwable t = catchThrowable(() -> Configuration.ofCmdLine("-d", "/tmp/" + unavailableDir));
 		assertThat(t).isInstanceOf(InvalidCommandLineArgumentsException.class)
 			.hasMessageContaining(unavailableDir);
 	}
