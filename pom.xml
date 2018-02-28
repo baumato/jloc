@@ -95,9 +95,7 @@
 		<profile>
 			<id>linux-executor</id>
 			<activation>
-				<os>
-					<family>unix</family>
-				</os>
+			<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
 				<plugins>
