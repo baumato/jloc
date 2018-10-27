@@ -29,3 +29,10 @@ hs_err_pid*
 
 # security-related files
 .sonarcloud.io.token
+
+### Code ###
+# Visual Studio Code - https://code.visualstudio.com/
+.settings/
+.vscode/
+tsconfig.json
+jsconfig.json
