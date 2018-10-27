@@ -13,8 +13,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
+		
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		
+		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+		<maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+		<asm.version>6.2.1</asm.version>
+		
 		<mainClass>de.baumato.loc.App</mainClass>
 		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
@@ -64,10 +71,25 @@
 
 	<build>
 		<plugins>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<release>${java.version}</release>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.plugin.version}</version>
+			</plugin>
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
