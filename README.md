@@ -6,11 +6,11 @@
 Counts the lines of code of all java files within one directory recursively.
 This application either counts physical lines of code or the source lines of code (without the empty lines
 and without the comments).
-Before counting the lines the java files get parsed and formatted to ensure comparability between projects. 
+Before counting the lines the java files get parsed and formatted to ensure comparability across projects. 
 
 ## Requirements
 
-Java 8
+Java 11
 
 ## Build
 
