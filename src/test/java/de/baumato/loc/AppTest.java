@@ -21,14 +21,14 @@ public class AppTest {
 	@Test
 	public void shouldRun() throws Exception {
 		App.main("-d", Paths.get("src/test/resources/container").toString());
-		assertThat(sysout.getLastLine()).isEqualTo("31");
+		assertThat(sysout.getLastLine()).isEqualTo("29");
 	}
 
 	@Test
 	public void shouldRunInVerboseMode() throws Exception {
 		Locale.setDefault(Locale.ENGLISH);
 		App.main("-v", "-d", Paths.get("src/test/resources/container").toString());
-		assertThat(sysout.getLastLine()).isEqualTo("Sum;31");
+		assertThat(sysout.getLastLine()).isEqualTo("Sum;29");
 	}
 
 	@Test
