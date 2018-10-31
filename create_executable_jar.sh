@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo arguments=\"$@\"
+
 jar_file=$1
 exec_file=$2
 
