@@ -29,7 +29,7 @@ public class App {
 			}
 		} catch (InvalidCommandLineArgumentsException e) {
 			printer.doneWithError(e.getLocalizedMessage());
-		} catch (RuntimeException e) {
+		} catch (Throwable e) {
 			printer.doneWithError(Messages.UNEXPECTED_ERROR.format(getStackTraceAsString(e)));
 		}
 	}
