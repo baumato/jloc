@@ -15,10 +15,10 @@ public class Throwables {
 		// prevent instantiation
 	}
 
-	public static String getStackTraceAsString(Exception e) {
+	public static String getStackTraceAsString(Throwable t) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
+		t.printStackTrace(pw);
 		return sw.toString();
 	}
 }
