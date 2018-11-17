@@ -16,9 +16,9 @@ import de.baumato.loc.printer.ConsolePrinter;
 public class App {
 
 	public static void main(String... args) {
-		var printer = new ConsolePrinter();
+		ConsolePrinter printer = new ConsolePrinter();
 		try {
-			var conf = Configuration.ofCmdLine(args);
+			Configuration conf = Configuration.ofCmdLine(args);
 			conf.getAppLogger().debug("configuration={}", conf);
 			printer.setIsVerbose(conf.isVerbose());
 			printer.startProgress();

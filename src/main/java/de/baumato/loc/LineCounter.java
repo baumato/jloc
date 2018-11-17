@@ -4,15 +4,23 @@ import static de.baumato.loc.util.MorePaths.endsWithIgnoreCase;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.comments.Comment;
+import com.google.common.collect.AbstractIterator;
+import com.google.common.io.MoreFiles;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
@@ -67,11 +75,34 @@ public class LineCounter {
   }
 
   long countLines(Path p) {
-    try (Stream<String> lines = readFileNormalized(p).lines()) {
+    try (Stream<String> lines = lines(readFileNormalized(p))) {
       return lines
-          .filter(line -> countEmptyLines() || (!countEmptyLines() && !line.isBlank()))
+          .filter(line -> countEmptyLines() || (!countEmptyLines() && !isBlank(line)))
           .count();
     }
+  }
+
+  Stream<String> lines(String s) {
+    // TODO In java 11 replace with s.lines()
+    Iterator<String> lineIter =
+        new AbstractIterator<String>() {
+          Scanner scanner = new Scanner(s);
+
+          @Override
+          protected String computeNext() {
+            while (scanner.hasNextLine()) {
+              return scanner.nextLine();
+            }
+            return endOfData();
+          }
+        };
+    return StreamSupport.stream(
+        Spliterators.spliteratorUnknownSize(lineIter, Spliterator.NONNULL), false);
+  }
+
+  private static boolean isBlank(String s) {
+    // TODO in java 11 replace with s.isBlank
+    return s.trim().isEmpty();
   }
 
   private String readFileNormalized(Path p) {
@@ -103,8 +134,9 @@ public class LineCounter {
   }
 
   private static String readFile(Path p) {
+    // TODO replace in java 11 with Files.readString
     try {
-      return Files.readString(p);
+      return MoreFiles.asCharSource(p, StandardCharsets.UTF_8).read();
     } catch (IOException e) {
       throw new UncheckedIOException("Error during reading: " + p, e);
     }
