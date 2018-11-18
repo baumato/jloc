@@ -27,7 +27,7 @@ Java 11
 ```
 ## Download
 
-Download .jsh (directly executable on linux) or .jar file from [release folder](https://git.io/v7kjZ).
+Download .jsh (directly executable on linux) or .jar file from [releases](https://git.io/fpc8E).
 
 
 ## Usage
