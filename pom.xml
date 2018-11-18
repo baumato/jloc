@@ -4,14 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.baumato</groupId>
-	<artifactId>lines-of-code</artifactId>
+	<artifactId>jloc</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 
-	<name>lines-of-code</name>
-	<url>https://github.com/baumato/lines-of-code</url>
+	<name>jloc</name>
+	
+	<description>
+		Counts the lines of code of all java files within one directory recursively.
+		This application either counts physical lines of code or the source lines
+		of code (without the empty lines and without the comments).
+		Before counting the lines the java files get parsed and formatted to ensure
+		comparability across projects.
+	</description>
 
+	<url>https://github.com/baumato/jloc</url>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -136,7 +145,8 @@
 								</goals>
 								<configuration>
 									<executable>${basedir}/create_executable_jar.sh</executable>
-									<commandlineArgs>${project.build.directory}/${project.artifactId}.jar ${project.build.directory}/${project.artifactId}.jsh</commandlineArgs>
+									<commandlineArgs>${project.build.directory}/${project.artifactId}.jar
+										${project.build.directory}/${project.artifactId}.jsh</commandlineArgs>
 								</configuration>
 							</execution>
 						</executions>
