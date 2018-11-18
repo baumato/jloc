@@ -1,8 +1,8 @@
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Build Status](https://travis-ci.org/baumato/lines-of-code.png?branch=master)](https://travis-ci.org/baumato/lines-of-code)
-[![Sonar Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=de.baumato%3Alines-of-code&branch=master)](https://sonarcloud.io/dashboard/index/de.baumato%3Alines-of-code)
+[![Build Status](https://travis-ci.org/baumato/jloc.png?branch=master)](https://travis-ci.org/baumato/jloc)
+[![Sonar Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=de.baumato%3Ajloc&branch=master)](https://sonarcloud.io/dashboard/index/de.baumato%3Ajloc)
 
-# lines-of-code
+# jloc
 Counts the lines of code of all java files within one directory recursively.
 This application either counts physical lines of code or the source lines of code (without the empty lines
 and without the comments).
@@ -14,7 +14,7 @@ Java 11
 
 ## Build
 
-- Clone or [download this repository](https://github.com/baumato/lines-of-code/archive/master.zip).
+- Clone or [download this repository](https://github.com/baumato/jloc/archive/master.zip).
 - Build on Linux 
 
 ```
@@ -47,11 +47,11 @@ Example:
 Example (on Linux):
 
 ```
-> lines-of-code.jsh -d /path/to/your/directory -e target bin -cm sloc
+> jloc.jsh -d /path/to/your/directory -e target bin -cm sloc
 ```
 
 Example (every system):
 
 ```
-> java -jar ./target/lines-of-code.jar -d /path/to/your/directory -e target bin -cm sloc
+> java -jar ./target/jloc.jar -d /path/to/your/directory -e target bin -cm sloc
 ```
