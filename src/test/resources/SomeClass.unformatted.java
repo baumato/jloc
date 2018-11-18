@@ -1,4 +1,4 @@
-package de.baumato.loc;
+package de.baumato.jloc;
 
 
 public class SomeClass

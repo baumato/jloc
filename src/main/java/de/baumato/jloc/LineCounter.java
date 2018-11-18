@@ -1,6 +1,6 @@
-package de.baumato.loc;
+package de.baumato.jloc;
 
-import static de.baumato.loc.util.MorePaths.endsWithIgnoreCase;
+import static de.baumato.jloc.util.MorePaths.endsWithIgnoreCase;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -16,10 +16,10 @@ import com.github.javaparser.ast.comments.Comment;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
-import de.baumato.loc.configuration.Configuration;
-import de.baumato.loc.file.CharsetTryingFileReader;
-import de.baumato.loc.messages.Messages;
-import de.baumato.loc.printer.ConsolePrinter;
+import de.baumato.jloc.configuration.Configuration;
+import de.baumato.jloc.file.CharsetTryingFileReader;
+import de.baumato.jloc.messages.Messages;
+import de.baumato.jloc.printer.ConsolePrinter;
 
 public class LineCounter {
 

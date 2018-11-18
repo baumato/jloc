@@ -1,4 +1,4 @@
-package de.baumato.loc.configuration;
+package de.baumato.jloc.configuration;
 
 public enum CalculationMode {
 	LOC(true, true), // physical lines of code including empty lines and comments

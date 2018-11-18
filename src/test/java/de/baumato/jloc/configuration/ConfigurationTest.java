@@ -1,4 +1,4 @@
-package de.baumato.loc.configuration;
+package de.baumato.jloc.configuration;
 
 import static org.assertj.core.api.Assertions.*;
 

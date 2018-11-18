@@ -30,7 +30,7 @@
 		<maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
 		<asm.version>6.2.1</asm.version>
 
-		<mainClass>de.baumato.loc.App</mainClass>
+		<mainClass>de.baumato.jloc.App</mainClass>
 		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 
@@ -145,8 +145,7 @@
 								</goals>
 								<configuration>
 									<executable>${basedir}/create_executable_jar.sh</executable>
-									<commandlineArgs>${project.build.directory}/${project.artifactId}.jar
-										${project.build.directory}/${project.artifactId}.jsh</commandlineArgs>
+									<commandlineArgs>${project.build.directory}/${project.artifactId}.jar ${project.build.directory}/${project.artifactId}.jsh</commandlineArgs>
 								</configuration>
 							</execution>
 						</executions>

@@ -1,4 +1,4 @@
-package de.baumato.loc.util;
+package de.baumato.jloc.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

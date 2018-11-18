@@ -1,6 +1,6 @@
-package de.baumato.loc.configuration;
+package de.baumato.jloc.configuration;
 
-import static de.baumato.loc.messages.Messages.DIR_DOES_NOT_EXIST;
+import static de.baumato.jloc.messages.Messages.DIR_DOES_NOT_EXIST;
 
 import java.lang.reflect.Field;
 import java.nio.file.Path;

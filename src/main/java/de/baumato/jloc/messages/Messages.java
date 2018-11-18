@@ -1,4 +1,4 @@
-package de.baumato.loc.messages;
+package de.baumato.jloc.messages;
 
 import java.text.MessageFormat;
 import java.util.Locale;

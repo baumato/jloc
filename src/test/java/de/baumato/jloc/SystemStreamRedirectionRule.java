@@ -1,4 +1,4 @@
-package de.baumato.loc;
+package de.baumato.jloc;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
