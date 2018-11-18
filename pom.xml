@@ -126,7 +126,7 @@
 
 	<profiles>
 		<profile>
-			<id>linux-executor</id>
+			<id>create-executable</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
