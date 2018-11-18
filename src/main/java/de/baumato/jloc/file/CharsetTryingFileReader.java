@@ -1,4 +1,4 @@
-package de.baumato.loc.file;
+package de.baumato.jloc.file;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

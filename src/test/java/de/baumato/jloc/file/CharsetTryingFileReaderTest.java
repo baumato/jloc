@@ -1,4 +1,4 @@
-package de.baumato.loc.file;
+package de.baumato.jloc.file;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

@@ -1,4 +1,4 @@
-package de.baumato.loc;
+package de.baumato.jloc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,7 +8,7 @@ import java.util.Locale;
 import org.junit.Rule;
 import org.junit.Test;
 
-import de.baumato.loc.SystemStreamRedirectionRule.SystemStream;
+import de.baumato.jloc.SystemStreamRedirectionRule.SystemStream;
 
 public class AppTest {
 

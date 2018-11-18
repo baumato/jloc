@@ -1,4 +1,4 @@
-package de.baumato.loc.configuration;
+package de.baumato.jloc.configuration;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -7,7 +7,7 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.OptionHandlerFilter;
 
-import de.baumato.loc.messages.Messages;
+import de.baumato.jloc.messages.Messages;
 
 /**
  * Exception indicates invalid command line arguments.

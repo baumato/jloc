@@ -1,4 +1,4 @@
-package de.baumato.loc;
+package de.baumato.jloc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.baumato.loc.configuration.Configuration;
-import de.baumato.loc.printer.ConsolePrinter;
+import de.baumato.jloc.configuration.Configuration;
+import de.baumato.jloc.printer.ConsolePrinter;
 
 public class LineCounterTest {
 

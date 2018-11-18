@@ -1,11 +1,11 @@
-package de.baumato.loc;
+package de.baumato.jloc;
 
-import static de.baumato.loc.util.Throwables.getStackTraceAsString;
+import static de.baumato.jloc.util.Throwables.getStackTraceAsString;
 
-import de.baumato.loc.configuration.Configuration;
-import de.baumato.loc.configuration.InvalidCommandLineArgumentsException;
-import de.baumato.loc.messages.Messages;
-import de.baumato.loc.printer.ConsolePrinter;
+import de.baumato.jloc.configuration.Configuration;
+import de.baumato.jloc.configuration.InvalidCommandLineArgumentsException;
+import de.baumato.jloc.messages.Messages;
+import de.baumato.jloc.printer.ConsolePrinter;
 
 /**
  * Counts the lines of code of all java files within one directory recursively.

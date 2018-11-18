@@ -1,4 +1,4 @@
-package de.baumato.loc.printer;
+package de.baumato.jloc.printer;
 
 /**
  *
